@@ -14,9 +14,6 @@ class Post(models.Model):
     like_users = models.ManyToManyField(User, through='PostLike', related_name='like_post_set')
     created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.author
-
 
 class PostImage(models.Model):
     """
@@ -24,8 +21,8 @@ class PostImage(models.Model):
     pip install pillow
     """
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    image = models.ImageField()
-    pass
+    image = models.ImageField(upload_to='posts/images')
+
 
 
 class PostComment(models.Model):
@@ -35,7 +32,7 @@ class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
-    pass
+
 
 
 class PostLike(models.Model):
@@ -47,4 +44,4 @@ class PostLike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    pass
+
