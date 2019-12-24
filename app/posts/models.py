@@ -14,6 +14,11 @@ class Post(models.Model):
     like_users = models.ManyToManyField(User, through='PostLike', related_name='like_post_set')
     created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        author = self.author
+        content = self.content
+        return f'{author}, {content}'
+
 
 class PostImage(models.Model):
     """
@@ -24,7 +29,6 @@ class PostImage(models.Model):
     image = models.ImageField(upload_to='posts/images')
 
 
-
 class PostComment(models.Model):
     """
     각 포스트의 댓글 (Many-to-one)
@@ -32,7 +36,6 @@ class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
-
 
 
 class PostLike(models.Model):
