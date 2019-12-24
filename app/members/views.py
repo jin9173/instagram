@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 
@@ -18,10 +17,10 @@ def login_view(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             login(request, user)
-            return redirect('url-name-login')
+            return redirect('index')
+        else:
+            return redirect('members:url-name-login')
 
-    else:
-        return render(request, 'members/login.html')
+    return render(request, 'members/login.html')

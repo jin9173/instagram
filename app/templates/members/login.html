@@ -8,10 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="POST">
-        username: <input type="text" name="username">
-        password: <input type="text" name="password">
-        <button type="submit" value="submit">Submit</button>
+    <h1>Login</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input name="username" type="text">
+        <input name="password" type="password">
+        <button type="submit">로그인</button>
     </form>
 </body>
 </html>
