@@ -17,10 +17,10 @@ def login_view(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user:
             login(request, user)
-            return redirect('index')
+            return redirect('posts:post-list')
         else:
-            return redirect('members:url-name-login')
+            return redirect('members:login')
 
     return render(request, 'members/login.html')

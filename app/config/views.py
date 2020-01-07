@@ -1,12 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def index(request):
-    """
-    settings.TEMPLATES의 DIRS에
-        Instagram/app/templates 경로를 추가
-
-    template: template/index.html
-        <h1>Index</h1>
-    """
+    if request.user.is_authenticated:
+        return redirect('posts:post-list')
     return render(request, 'index.html')
