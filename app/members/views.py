@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import login, logout, get_user_model
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
@@ -10,15 +10,13 @@ User = get_user_model()
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            form.login(request)
             return redirect('posts:post-list')
-        else:
-            return redirect('members:login')
-    form = LoginForm()
+    else:
+        form = LoginForm()
+
     context = {
         'form': form,
     }

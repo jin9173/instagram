@@ -21,6 +21,13 @@
                             {{ field }}
                         </div>
                     {% endfor %}
+                    {% if form.non_field_errors %}
+                    <ul class="list-unstyled text-danger">
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                     <button class="btn btn-primary btn-block">로그인</button>
                 </form>
                 <hr>
