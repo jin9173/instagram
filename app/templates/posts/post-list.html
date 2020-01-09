@@ -1,18 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div>User: {{ request.user }}</div>
+<div>Authenticated: {{ request.user.is_authenticated }}</div>
+<div>
+    <!--
+    로그아웃버튼 (a태그로 구현)
+    이 버튼은 사용자가 로그인되어있을때만 보여주도록 한다
+    -->
+    <a href="{% url 'members:logout' %}">로그아웃</a>
+</div>
+<div>
+    <a href="{% url 'posts:post-create' %}">포스트 추가</a>
+</div>
 {% for post in posts %}
-<div>{{ post.author }}</div>
-<div>{{ post.created }}</div>
+<div>작성자: {{ post.author }}</div>
+<div>작성일시: {{ post.created }}</div>
+<div>글내용: {{ post.content }}</div>
+<div>
+    {% for post_image in post.postimage_set.all %}
+    <img src="{{ post_image.image.url }}" alt="" style="max-width: 200px;">
+    {% endfor %}
+</div>
 <form action="{% url 'posts:post-like' pk=post.pk %}" method="POST">
     {% csrf_token %}
-    {# {% if user in post.like_users.all %} #}
     {% if post in user.like_post_set.all %}
-        <div>좋아요 눌린 상태</div>
+    <button class="btn btn-primary" type="submit">좋아요 취소</button>
     {% else %}
-        <div>좋아요 안눌린 상태</div>
+    <button class="btn btn-outline-primary" type="submit">좋아요</button>
     {% endif %}
-    <button type="submit">Like</button>
 </form>
+<div>
+    <ul>
+        {% for comment in post.postcomment_set.all %}
+        <li>
+            <b>{{ comment.author.name }}</b>
+            <span>{{ comment.content }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <div>
+        <!-- Comment를 작성하는 Form -->
+        <form action="{% url 'posts:comment-create' post_pk=post.pk %}" method="POST">
+            {% csrf_token %}
+            {{ comment_form }}
+            <button type="submit">작성</button>
+        </form>
+    </div>
+</div>
+<hr>
 {% endfor %}
 {% endblock %}

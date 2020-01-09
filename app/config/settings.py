@@ -39,6 +39,11 @@ SECRET_KEY = '@3py)x0o=^azt68qj6xa+-&@e6avv4qv=c6!3%ncn0qvhoj!0a'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '172.16.1.116',
+]
 AUTH_USER_MODEL = 'members.User'
 
 # Application definition
